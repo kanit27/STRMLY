@@ -13,22 +13,51 @@ export default function SignupLogin({ onLogin }) {
     e.preventDefault();
     setError("");
     const api = import.meta.env.VITE_API_URL;
-    const url = isSignup ? `${api}/auth/signup` : `${api}/auth/login`;
-    const body = isSignup
-      ? { fullname: form.fullname, email: form.email, password: form.password }
-      : { email: form.email, password: form.password };
+    const signupUrl = `${api}/auth/signup`;
+    const loginUrl = `${api}/auth/login`;
+    const signupBody = { fullname: form.fullname, email: form.email, password: form.password };
+    const loginBody = { email: form.email, password: form.password };
+
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        onLogin(data.token);
-        navigate("/feed");
+      if (isSignup) {
+        // First, sign up
+        const signupRes = await fetch(signupUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(signupBody),
+        });
+        const signupData = await signupRes.json();
+        if (!signupRes.ok) {
+          setError(signupData.error || "Signup error");
+          return;
+        }
+        // Then, log in
+        const loginRes = await fetch(loginUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(loginBody),
+        });
+        const loginData = await loginRes.json();
+        if (loginRes.ok) {
+          onLogin(loginData.token);
+          navigate("/feed");
+        } else {
+          setError(loginData.error || "Login error after signup");
+        }
       } else {
-        setError(data.error || "Error");
+        // Login flow
+        const loginRes = await fetch(loginUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(loginBody),
+        });
+        const loginData = await loginRes.json();
+        if (loginRes.ok) {
+          onLogin(loginData.token);
+          navigate("/feed");
+        } else {
+          setError(loginData.error || "Login error");
+        }
       }
     } catch {
       setError("Network error");
@@ -66,8 +95,8 @@ export default function SignupLogin({ onLogin }) {
         onChange={handleChange}
         required
       />
-      {error && <div className="text-red-500 text-sm">{error}</div>}
-      <button className="bg-blue-600 text-white rounded py-2 font-bold">{isSignup ? "Sign Up" : "Login"}</button>
+      {error && <div className="text-red-300 text-sm">{error}</div>}
+      <button className="bg-red-600 text-white rounded py-2 font-bold">{isSignup ? "Sign Up" : "Login"}</button>
       <button
         type="button"
         className="text-blue-600 underline text-sm"

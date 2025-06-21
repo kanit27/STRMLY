@@ -56,7 +56,7 @@ export default function Upload({ token }) {
           to="/feed"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineVideoCamera size={24} />
@@ -66,7 +66,7 @@ export default function Upload({ token }) {
           to="/upload"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineCloudUpload size={24} />
@@ -76,7 +76,7 @@ export default function Upload({ token }) {
           to="/profile"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineUser size={24} />
@@ -120,7 +120,7 @@ export default function Upload({ token }) {
         )}
         {msg && !loading && <div className="text-green-600 text-sm">{msg}</div>}
         {error && !loading && <div className="text-red-500 text-sm">{error}</div>}
-        <button className="bg-blue-600 text-white rounded py-2 font-bold" disabled={loading}>
+        <button className="bg-red-600 text-white rounded py-2 font-bold" disabled={loading}>
           {loading ? "Uploading..." : "Upload"}
         </button>
       </form>

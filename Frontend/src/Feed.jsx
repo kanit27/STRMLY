@@ -25,7 +25,7 @@ export default function Feed() {
           to="/feed"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineVideoCamera size={24} />
@@ -35,7 +35,7 @@ export default function Feed() {
           to="/upload"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineCloudUpload size={24} />
@@ -45,7 +45,7 @@ export default function Feed() {
           to="/profile"
           className={({ isActive }) =>
             "flex flex-col items-center text-xs " +
-            (isActive ? "text-blue-600" : "text-gray-400")
+            (isActive ? "text-red-600" : "text-gray-400")
           }
         >
           <AiOutlineUser size={24} />
